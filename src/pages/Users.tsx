@@ -17,13 +17,12 @@ interface MemberData {
   id: string;
   role: string;
   joinedAt: string;
-  user: {
-    id: string;
-    email: string;
-    firstName: string;
-    lastName: string;
-    isActive: boolean;
-  };
+  //  id: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+  isActive: boolean
+
 }
 
 export default function Users() {
@@ -126,7 +125,7 @@ export default function Users() {
 
   return (
     <div className="space-y-8 animate-in fade-in duration-200">
-      
+
       {/* HEADER SECTION */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
@@ -169,36 +168,34 @@ export default function Users() {
                 </tr>
               </thead>
               <tbody>
-                {members.map((member) => (
+                {members.map((member: any) => (
                   <tr key={member.id} className="border-b border-slate-50 dark:border-slate-800/40 last:border-0 hover:bg-slate-50/50 dark:hover:bg-slate-800/10 transition">
                     <td className="py-4 px-4 font-semibold text-slate-800 dark:text-slate-100">
-                      {member.user.firstName} {member.user.lastName}
+                      {member?.firstName} {member?.lastName}
                     </td>
-                    <td className="py-4 px-4 text-slate-500 dark:text-slate-400 font-medium">{member.user.email}</td>
+                    <td className="py-4 px-4 text-slate-500 dark:text-slate-400 font-medium">{member?.email}</td>
                     <td className="py-4 px-4">
                       <span className="inline-flex px-2 py-0.5 rounded-full text-[10px] font-bold tracking-wider bg-indigo-50 dark:bg-indigo-950/20 text-indigo-700 dark:text-indigo-400 border border-indigo-150/40 dark:border-indigo-900/40">
                         {member.role}
                       </span>
                     </td>
                     <td className="py-4 px-4">
-                      <span className={`inline-flex px-2 py-0.5 rounded-full text-[10px] font-bold tracking-wider ${
-                        member.user.isActive
+                      <span className={`inline-flex px-2 py-0.5 rounded-full text-[10px] font-bold tracking-wider ${member?.isActive
                           ? 'bg-emerald-50 text-emerald-700 dark:bg-emerald-950/20 dark:text-emerald-400'
                           : 'bg-rose-50 text-rose-700 dark:bg-rose-950/20 dark:text-rose-450'
-                      }`}>
-                        {member.user.isActive ? 'Active' : 'Disabled'}
+                        }`}>
+                        {member?.isActive ? 'Active' : 'Disabled'}
                       </span>
                     </td>
                     <td className="py-4 px-4 text-center">
                       <button
-                        onClick={() => handleToggleActive(member.user.id, member.user.isActive)}
-                        className={`text-xs font-semibold flex items-center justify-center space-x-1 border px-3 py-1.5 rounded-xl mx-auto transition ${
-                          member.user.isActive
+                        onClick={() => handleToggleActive(member?.id, member?.isActive)}
+                        className={`text-xs font-semibold flex items-center justify-center space-x-1 border px-3 py-1.5 rounded-xl mx-auto transition ${member?.isActive
                             ? 'border-rose-100 text-rose-500 hover:bg-rose-50/50 dark:border-rose-950/20 dark:hover:bg-rose-950/10'
                             : 'border-emerald-100 text-emerald-600 hover:bg-emerald-50/50 dark:border-emerald-950/20 dark:hover:bg-emerald-950/10'
-                        }`}
+                          }`}
                       >
-                        {member.user.isActive ? (
+                        {member?.isActive ? (
                           <>
                             <UserX className="w-3.5 h-3.5" />
                             <span>Disable</span>
@@ -229,24 +226,22 @@ export default function Users() {
             >
               <X className="w-5 h-5" />
             </button>
-            
+
             <h2 className="text-xl font-bold text-slate-800 dark:text-white mb-6">Invite Organization Colleague</h2>
 
             {/* TAB SELECTOR */}
             <div className="flex border-b border-slate-100 dark:border-slate-800 mb-6 text-sm">
               <button
                 onClick={() => setInviteMode('single')}
-                className={`flex-1 pb-3 font-semibold border-b-2 transition ${
-                  inviteMode === 'single' ? 'border-indigo-650 text-indigo-600 dark:text-indigo-400' : 'border-transparent text-slate-400'
-                }`}
+                className={`flex-1 pb-3 font-semibold border-b-2 transition ${inviteMode === 'single' ? 'border-indigo-650 text-indigo-600 dark:text-indigo-400' : 'border-transparent text-slate-400'
+                  }`}
               >
                 Single Invite
               </button>
               <button
                 onClick={() => setInviteMode('bulk')}
-                className={`flex-1 pb-3 font-semibold border-b-2 transition ${
-                  inviteMode === 'bulk' ? 'border-indigo-650 text-indigo-600 dark:text-indigo-400' : 'border-transparent text-slate-400'
-                }`}
+                className={`flex-1 pb-3 font-semibold border-b-2 transition ${inviteMode === 'bulk' ? 'border-indigo-650 text-indigo-600 dark:text-indigo-400' : 'border-transparent text-slate-400'
+                  }`}
               >
                 Bulk CSV Upload
               </button>
@@ -296,7 +291,7 @@ export default function Users() {
               </form>
             ) : (
               <form onSubmit={handleBulkInvite} className="space-y-6">
-                
+
                 <div className="space-y-2">
                   <label className="text-xs font-semibold text-slate-500 uppercase tracking-wider block">CSV Invitations File</label>
                   <div className="flex flex-col items-center justify-center p-6 border-2 border-dashed border-slate-200 dark:border-slate-800 rounded-2xl bg-slate-50 dark:bg-slate-950 relative min-h-32">

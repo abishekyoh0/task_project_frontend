@@ -53,9 +53,9 @@ export default function Events() {
     title: '',
     description: '',
     venue: '',
-    capacity: 50,
+    capacity: '50',
     category: '',
-    price: 0,
+    price: '',
     registrationDeadline: '',
     startDate: '',
     endDate: '',
@@ -125,6 +125,8 @@ export default function Events() {
       // 2. Submit event creation payload
       await axiosInstance.post('/events', {
         ...formData,
+        capacity: parseInt(formData.capacity) || 0,
+        price: parseFloat(formData.price) || 0,
         banner: bannerUrl || undefined,
       });
 
@@ -136,9 +138,9 @@ export default function Events() {
         title: '',
         description: '',
         venue: '',
-        capacity: 50,
+        capacity: '50',
         category: '',
-        price: 0,
+        price: '',
         registrationDeadline: '',
         startDate: '',
         endDate: '',
@@ -287,7 +289,7 @@ export default function Events() {
                     <div className="space-y-2 pt-2 border-t border-slate-50 dark:border-slate-800/40 text-xs text-slate-500 dark:text-slate-400">
                       <div className="flex items-center space-x-2">
                         <Calendar className="w-4 h-4 text-slate-400" />
-                        <span>{new Date(event.startDate).toLocaleDateString()}</span>
+                        <span>{new Date(event.startDate).toLocaleString(undefined, { dateStyle: 'medium', timeStyle: 'short' })}</span>
                       </div>
                       <div className="flex items-center space-x-2">
                         <MapPin className="w-4 h-4 text-slate-400" />
@@ -385,14 +387,18 @@ export default function Events() {
                 </div>
                 <div className="space-y-1">
                   <label className="text-xs font-semibold text-slate-500 uppercase tracking-wider block">Category</label>
-                  <input
-                    type="text"
+                  <select
                     value={formData.category}
                     onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                    placeholder="e.g. Technology"
-                    className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-850 rounded-2xl px-4 py-3 text-sm focus:outline-none focus:border-indigo-500 transition-colors"
+                    className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-850 rounded-2xl px-4 py-3.5 text-sm focus:outline-none focus:border-indigo-500 transition-colors text-slate-600 dark:text-slate-350 cursor-pointer"
                     required
-                  />
+                  >
+                    <option value="">Select Category</option>
+                    <option value="Technology">Technology</option>
+                    <option value="Business">Business</option>
+                    <option value="Education">Education</option>
+                    <option value="Social">Social</option>
+                  </select>
                 </div>
               </div>
 
@@ -425,7 +431,7 @@ export default function Events() {
                   <input
                     type="number"
                     value={formData.capacity}
-                    onChange={(e) => setFormData({ ...formData, capacity: parseInt(e.target.value) || 0 })}
+                    onChange={(e) => setFormData({ ...formData, capacity: e.target.value })}
                     className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-850 rounded-2xl px-4 py-3 text-sm focus:outline-none focus:border-indigo-500 transition-colors"
                     min={1}
                     required
@@ -436,7 +442,8 @@ export default function Events() {
                   <input
                     type="number"
                     value={formData.price}
-                    onChange={(e) => setFormData({ ...formData, price: parseFloat(e.target.value) || 0 })}
+                    onChange={(e) => setFormData({ ...formData, price: e.target.value })}
+                    placeholder="0.00"
                     className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-850 rounded-2xl px-4 py-3 text-sm focus:outline-none focus:border-indigo-500 transition-colors"
                     min={0}
                     step="0.01"
