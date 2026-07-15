@@ -16,8 +16,23 @@ export default function Login() {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [activeTab, setActiveTab] = useState<'SUPER_ADMIN' | 'ORG_ADMIN' | 'USER'>('USER');
 
   const from = location.state?.from?.pathname || '/dashboard';
+
+  const handleRoleTabChange = (role: 'SUPER_ADMIN' | 'ORG_ADMIN' | 'USER') => {
+    setActiveTab(role);
+    if (role === 'SUPER_ADMIN') {
+      setEmail('superadmin@platform.com');
+      setPassword('Password123!');
+    } else if (role === 'ORG_ADMIN') {
+      setEmail('admin@platform.com');
+      setPassword('Password123!');
+    } else {
+      setEmail('');
+      setPassword('');
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -57,6 +72,43 @@ export default function Login() {
           </div>
           <h2 className="text-2xl font-bold text-slate-800 dark:text-white">Welcome Back</h2>
           <p className="text-slate-400 dark:text-slate-500 text-sm mt-1">Sign in to manage your events and tickets</p>
+        </div>
+
+        {/* ROLE TABS */}
+        <div className="flex border border-slate-100 dark:border-slate-800/80 mb-6 bg-slate-50 dark:bg-slate-950/40 p-1 rounded-2xl">
+          <button
+            type="button"
+            onClick={() => handleRoleTabChange('SUPER_ADMIN')}
+            className={`flex-1 text-center py-2 rounded-xl text-xs font-bold transition-all duration-150 cursor-pointer ${
+              activeTab === 'SUPER_ADMIN'
+                ? 'bg-white dark:bg-slate-800 text-indigo-600 dark:text-indigo-400 shadow-sm'
+                : 'text-slate-400 hover:text-slate-700 dark:hover:text-slate-200'
+            }`}
+          >
+            Super Admin
+          </button>
+          <button
+            type="button"
+            onClick={() => handleRoleTabChange('ORG_ADMIN')}
+            className={`flex-1 text-center py-2 rounded-xl text-xs font-bold transition-all duration-150 cursor-pointer ${
+              activeTab === 'ORG_ADMIN'
+                ? 'bg-white dark:bg-slate-800 text-indigo-600 dark:text-indigo-400 shadow-sm'
+                : 'text-slate-400 hover:text-slate-700 dark:hover:text-slate-200'
+            }`}
+          >
+            Org Admin
+          </button>
+          <button
+            type="button"
+            onClick={() => handleRoleTabChange('USER')}
+            className={`flex-1 text-center py-2 rounded-xl text-xs font-bold transition-all duration-150 cursor-pointer ${
+              activeTab === 'USER'
+                ? 'bg-white dark:bg-slate-800 text-indigo-600 dark:text-indigo-400 shadow-sm'
+                : 'text-slate-400 hover:text-slate-700 dark:hover:text-slate-200'
+            }`}
+          >
+            User
+          </button>
         </div>
 
         {/* ERROR MESSAGE */}
