@@ -106,7 +106,7 @@ export default function Registrations() {
 
   const handleCheckIn = async (regId: string) => {
     try {
-      await axiosInstance.post(`/registrations/${regId}/check-in`);
+      await axiosInstance.post(`/registrations/${regId}/checkin`);
       showToast('Attendee checked in successfully!', 'success');
       fetchAdminRegistrations();
     } catch (err: any) {

@@ -71,7 +71,7 @@ export default function Payments() {
     
     // Fetch payments and coupons in parallel
     Promise.all([
-      axiosInstance.get('/payments'),
+      axiosInstance.get('/payments/history'),
       axiosInstance.get('/payments/coupons/all'),
     ])
       .then(([payRes, coupRes]) => {
