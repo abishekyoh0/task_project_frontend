@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const axiosInstance = axios.create({
-  baseURL: 'https://eventflow-i1p9.onrender.com/api/v1',
+  baseURL: '/api/v1',
   headers: {
     'Content-Type': 'application/json',
   },

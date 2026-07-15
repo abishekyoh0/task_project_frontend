@@ -119,12 +119,14 @@ export default function Payments() {
     setCouponLoading(true);
 
     try {
+      const expiresAt = new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString();
+
       await axiosInstance.post('/payments/coupons', {
         code: formData.code.toUpperCase(),
-        discountPercentage: formData.discountPercentage ? parseInt(formData.discountPercentage) : undefined,
-        discountFlat: formData.discountFlat ? parseFloat(formData.discountFlat) : undefined,
+        discountPercent: formData.discountPercentage ? parseInt(formData.discountPercentage) : undefined,
+        discountAmount: formData.discountFlat ? parseFloat(formData.discountFlat) : undefined,
         maxUses: formData.maxUses ? parseInt(formData.maxUses) : undefined,
-        eventId: formData.eventId || undefined,
+        expiresAt,
       });
 
       showToast('Coupon created successfully!', 'success');

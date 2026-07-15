@@ -87,7 +87,7 @@ export default function SidebarLayout() {
     if (!token) return;
 
     // Establish WebSocket Connection
-    const socket = io('https://eventflow-i1p9.onrender.com/notifications', {
+    const socket = io('/notifications', {
       auth: { token },
       transports: ['websocket'],
     });
